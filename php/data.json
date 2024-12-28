@@ -1,0 +1,10 @@
+[
+    "Block all traffic from IP address 192.168.1.1.",
+    "Alert on failed login attempts exceeding 3 within 10 minutes.",
+    "Monitor unusual data transfer rates on port 22.",
+    "Log all outgoing traffic to external IPs.",
+    "Alert on connections from unrecognized devices.",
+    "select unnauthorized access",
+    "sakthi",
+    "select unnauthorized access"
+]
