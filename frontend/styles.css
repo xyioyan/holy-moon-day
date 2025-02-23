@@ -11,7 +11,6 @@ header {
     background: #0078d7;
     color: #fff;
     padding: 10px 0;
-    text-align: center;
 }
 
 header nav a {
@@ -51,3 +50,19 @@ footer {
     border-radius: 5px;
     background: #f9f9f9;
 }
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+th,td{
+    border: 1px solid black;
+    padding: 8px;
+    text-align: left;
+    white-space: nowrap;/*Prevents wrapping*/
+}
+
+
+/* <a href="dashboard.html">Dashboard</a>
+<a href="../New folder/logs copy.html">Logs</a>
+<a href="../New folder/settings copy.html">Settings</a>
+<a href="../php/logout.php">Logout</a> */

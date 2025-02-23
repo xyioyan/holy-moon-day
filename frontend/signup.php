@@ -1,7 +1,7 @@
 <?php
 // Database connection details
 $host = 'localhost';
-$db = 'ids_db';
+$db = 'ids_system';
 $user = 'root';
 $pass = '';
 
@@ -30,14 +30,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     else{window.location.href = 'signup.html';}
         </script>";
 
-    } else {
+    }
+    // Query to check user credentials
+    $query = "SELECT * FROM users WHERE email='$name'";
+    $result = $conn->query($query);
+
+    if ($result->num_rows > 0) {
+        echo " <script> if(confirm ('Email id allready exist! Please Login')){
+        window.location.href = 'login.html';
+        }
+    else{window.location.href = 'signup.html';}
+        </script>";
+
+    }
+    
+    else {
 
 
-    $insert_query = "INSERT INTO users (name,username, password) VALUES ('$name','$username','$password')";
+    $insert_query = "INSERT INTO users (email,username, password) VALUES ('$name','$username','$password')";
     $result = $conn->query($query);
 
     if ($result = $conn->query($insert_query)===TRUE) {
-        echo " <script> if(confirm('successful!'))
+        echo " <script> if(confirm('Success! Please Login again'))
     {
         window.location.href = 'login.html';
     }

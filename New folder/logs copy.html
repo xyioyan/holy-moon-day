@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Logs - Web Security Monitoring System</title>
+  <!-- <link rel="stylesheet" href="../frontend/styles.css"> -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+    body { display: flex; height: 100vh; background-color: #f4f7fc; font-size: 12px; }
+    .sidebar { width: 180px; background: #2c3e50; color: white; padding: 10px; position: fixed; height: 100%; display: flex; flex-direction: column; }
+    .sidebar h2 { text-align: center; margin-bottom: 15px; font-size: 19px; }
+    .sidebar a { color: #ecf0f1; text-decoration: none; padding: 6px; display: block; margin-bottom: 6px; border-radius: 5px; transition: 0.3s; font-size: 17px; }
+    .sidebar a:hover { background-color: #2d83da; }
+    .main-content { margin-left: 180px; padding: 10px; flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 9px; }
+    .grid-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .section { background: white; padding: 10px; border-radius: 6px; box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); font-size: 19px; }
+    .charts { display: flex; flex-direction: row; gap: 0px; margin-top: 10px; margin-bottom: 10px;}
+    .chart-box { background: white; padding: 10px; border-radius: 6px; box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); flex: 1; }
+    table { width: 100%; border-collapse: collapse; margin-top: 5px; font-size: 14px; }
+    th, td { padding: 8px; border: 1px solid #ddd; text-align: left; }
+    th { background: #3498db; color: white; font-size: 16px; }
+    ul { padding-left: 20px; }
+    li { font-size: 14px; margin-bottom: 5px; }
+    
+    /* Custom styling for the statistics overview section */
+    .stats {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .stat-box {
+      background: #3498db;
+      color: white;
+      padding: 20px;
+      border-radius: 6px;
+      flex: 1;
+      text-align: center;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+      <h2>Web Security Monitoring System</h2>
+      <nav>
+        <a href="../frontend/dashboard1.html"><i class="fas fa-chart-line"></i> Dashboard</a>
+        <a href="../New folder/logs copy.html" class="active"><i class="fas fa-file-alt"></i> Logs</a>
+        <a href="../New folder/settings copy.html"><i class="fas fa-cog"></i> Settings</a>
+        <a href="../php/logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
+      </nav>
+  </div >
+  <div class="main-content">
+    <main>
+      <section id="log-filters" class="section">
+        <h3>Filter Logs</h3>
+        <form id="filter-form">
+          <label for="start-date">Start Date:</label>
+          <input type="date" id="start-date">
+          <label for="end-date">End Date:</label>
+          <input type="date" id="end-date">
+          <label for="severity">Severity:</label>
+          <select id="severity">
+            <option value="">All</option>
+            <option value="High">High</option>
+            <option value="Medium">Medium</option>
+            <option value="Low">Low</option>
+          </select>
+          <label for="event-type">Event Type:</label>
+          <input type="text" id="event-type" placeholder="Enter event type">
+          <button type="submit">Apply Filters</button>
+        </form>
+      </section>
+
+      <section id="system-logs" class="section">
+        <h3>System Logs</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Timestamp</th>
+              <th>Event Type</th>
+              <th>Source IP</th>
+              <th>Severity</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody id="log-list"></tbody>
+        </table>
+        <div id="pagination">
+          <button id="prev-page" style="font-size: 14px;" onclick="prevPage()">Previous</button>
+          <span id="page-info" style="font-size: 14px;">Page 1 of 1</span>
+          <button id="next-page" style="font-size: 14px;" onclick="nextPage()">Next</button>
+          <button id="export-logs" onclick="exportLogs()" style="margin-left: 90%; font-size: 14px;" >Export Logs</button>
+      </div>
+    
+      </section>
+
+      <section id="log-summary-chart" class="charts" >
+        <div class="chart-box">
+          <h2>Log Severity Distribution</h2>
+        <canvas id="logSeverityChart"  width="500" height="300" ></canvas>
+        </div>
+        <div >
+        <canvas id="logSeverityChartBar"  width="500" height="300" ></canvas>
+        </div>
+        
+      </section>
+    </main>
+
+    <footer >
+      <p>&copy; 2025 Web Security Monitoring System. All rights reserved.</p>
+    </footer>
+  </div>
+  <style >
+    footer p {
+    text-align: center;
+    margin-top: 20px;
+    padding: 10px 0;
+    background: #0078d7;
+    color: #fff;
+    font-size: 19px;
+}
+.close-button{
+  size: 19px;
+}
+  </style>
+  <script src="logs copy.js"></script>
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard-Web Security Monitoring System</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+    body { display: flex; height: 100vh; background-color: #f4f7fc; font-size: 12px; }
+    h1{
+      font-size: 24px;
+    }
+    img{
+      border-radius: 100%;
+    }
+    .sidebar { width: 180px; background: #2c3e50; color: white; padding: 10px; position: fixed; height: 100%; display: flex; flex-direction: column; }
+    .sidebar h2 { text-align: center; margin-bottom: 15px; font-size: 19px; }
+    .sidebar a { color: #ecf0f1; text-decoration: none; padding: 6px; display: block; margin-bottom: 6px; border-radius: 5px; transition: 0.3s; font-size: 17px; }
+    .sidebar a:hover { background-color: #2d83da; }
+    .main-content { margin-left: 180px; padding: 10px; flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 9px; }
+    .grid-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .section { background: white; padding: 10px; border-radius: 6px; box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); font-size: 12px; }
+    .charts { display: flex; flex-direction: row; gap: 10px; justify-content: space-between; }
+    .chart-box { background: white; padding: 10px; border-radius: 6px; box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); flex: 1; }
+    table { width: 100%; border-collapse: collapse; margin-top: 5px; font-size: 14px; }
+    th, td { padding: 8px; border: 1px solid #ddd; text-align: left; }
+    th { background: #3498db; color: white; font-size: 16px; }
+    ul { padding-left: 20px; }
+    li { font-size: 14px; margin-bottom: 5px; }
+    
+    /* Custom styling for the statistics overview section */
+    .stats {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .stat-box {
+      background: #3498db;
+      color: white;
+      padding: 20px;
+      border-radius: 6px;
+      flex: 1;
+      text-align: center;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body> 
+  <div class="sidebar">
+    <img src="logo.webp">
+    <nav>
+      <a href="dashboard1.html"><i class="fas fa-chart-line"></i> Dashboard</a>
+      <a href="../New folder/logs copy.html"><i class="fas fa-file-alt"></i> Logs</a>
+      <a href="../New folder/settings copy.html"><i class="fas fa-cog"></i> Settings</a>
+      <a href="../php/logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </nav> 
+  </div>
+  <div class="main-content">
+
+    <section id="statistics" class="section">
+      <h1 style="text-size-adjust: 19px; text-align: center;">Web Security Monitoring System</h1>
+      <h2>Statistics Overview</h2>
+      <div class="stats">
+        <div class="stat-box">
+          <i class="fas fa-bell"></i>
+          <h3>Total Alerts</h3>
+          <p  id="total-alerts">Loading...</p>
+        </div>
+        <div class="stat-box">
+          <i class="fas fa-shield-alt"></i>
+          <h3>Blocked IPs</h3>
+          <p id="blocked-ips">Loading...</p>
+        </div>
+        <div class="stat-box">
+          <i class="fas fa-list"></i>
+          <h3>Active Rules</h3>
+          <p id="active-rules">Loading...</p>
+        </div>
+      </div>
+    </section>
+    <section id="charts" class="charts">
+      <div class="chart-box">
+        <h2>Alerts Over Time</h2>
+        <canvas id="alertsChart" width="500" height="300"></canvas>
+      </div>
+      <div class="chart-box">
+        <h2>Severity Levels</h2>
+        <canvas id="severityChart" width="500" height="300"></canvas>
+      </div>
+    </section>
+    <div class="grid-container">
+      <!-- Statistics Overview Section -->
+      
+      <!-- Other Sections (Recent Alerts, Detection Rules, etc.) -->
+      <section id="recent-alerts" class="section">
+        <h2 >Recent Alerts</h2>
+        <table id="alerts-table">
+          <tr><th>Timestamp</th><th>Type</th><th>Severity</th><th>Action Taken</th></tr>
+          <tr><td>2025-01-22 14:00</td><td>Failed Login Attempts</td><td>High</td><td>Admin Notified</td></tr>
+          <tr><td>2025-01-21 18:20</td><td>IP Scanning Detected</td><td>Medium</td><td>IP Blocked</td></tr>
+        </table>
+      </section>
+      <section id="detection-rules" class="section">
+        <h2>Detection Rules</h2>
+        <table id="rules-table">
+          <tr><th>Rule ID</th><th>Description</th><th>Status</th></tr>
+          <tr><td>001</td><td>Monitor failed login attempts</td><td>Active</td></tr>
+          <tr><td>002</td><td>Detect IP scanning</td><td>Active</td></tr>
+          <tr><td>003</td><td>Block unauthorized file uploads</td><td>Inactive</td></tr>
+        </table>
+      </section>
+      <section id="notifications" class="section">
+        <h2>Notifications</h2>
+        <ul  id="notifications-list">
+          <li>Unresolved alert: Failed Login Attempts</li>
+          <li>System update available.</li>
+        </ul>
+      </section>
+      <section id="logs-summary" class="section">
+        <h2>System Logs Summary</h2>
+        <ul id="logs-list">
+          <li>2025-01-22 13:45: IP blocked: 192.168.1.5</li>
+          <li>2025-01-22 13:30: Admin logged in</li>
+        </ul>
+      </section>
+    </div>
+  </div>
+  
+  <script src="dashboard.js"></script>
+</body>
+</html>

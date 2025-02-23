@@ -9,7 +9,6 @@ if (isset($data['rule']) && !empty(trim($data['rule']))) {
     $rule = trim($data['rule']);
     try {
         // Prepare the SQL statement
-        echo"<script>console.log(':rule')</script>";
         $stmt = $conn->prepare("INSERT INTO detection_rules (rules_text) VALUES (:rule)");
         $stmt->bindParam(':rule', $data['rule'], PDO::PARAM_STR);
         

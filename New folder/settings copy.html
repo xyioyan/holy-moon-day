@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings - Web Security Monitoring System</title>
+  <!-- <link rel="stylesheet" href="styles.css"> Link to external CSS -->
+  <script defer src="settings.js"></script> <!-- Link to external JavaScript -->
+</head>
+<body>
+  <div class="sidebar">
+    <!-- Header -->
+      <h2>Web Security Monitoring System</h2>
+      <nav>
+        <a href="../frontend/dashboard1.html"><i class="fas fa-chart-line"></i> Dashboard</a>
+        <a href="../New folder/logs copy.html"><i class="fas fa-file-alt"></i> Logs</a>
+        <a href="settings copy.html" class="active"><i class="fas fa-cog"></i> Settings</a>
+        <a href="../php/logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
+      </nav>
+  </div>
+    <!-- Main Content -->
+     <div class="main-content">
+    <main>
+
+      <!-- Existing Rules Table -->
+      <section id="existing-rules" class="section">
+        <h3>Existing Rules</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Condition</th>
+              <th>Severity</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="rules-table">
+            <!-- Populated dynamically by settings.js -->
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Add New Rule Form -->
+      <section id="add-rule" class="section">
+        <h3>Add New Rule</h3>
+        <form id="add-rule-form">
+          <label for="rule-name">Name:</label>
+          <input type="text" id="rule-name" required>
+
+          <label for="rule-condition">Condition:</label>
+          <input type="text" id="rule-condition" required>
+
+          <label for="rule-severity">Severity:</label>
+          <select id="rule-severity" required>
+            <option value="High">High</option>
+            <option value="Medium">Medium</option>
+            <option value="Low">Low</option>
+          </select>
+
+          <label for="rule-status">Status:</label>
+          <select id="rule-status" required>
+            <option value="Active">Active</option>
+            <option value="Inactive">Inactive</option>
+          </select>
+
+          <button type="submit">Add Rule</button>
+        </form>
+      </section>
+
+      <!-- Edit Rule Modal -->
+      <div id="edit-rule-modal" class="modal">
+        <div class="modal-content">
+          <span class="close-btn" onclick="closeEditModal()">&times;</span>
+          <h3>Edit Rule</h3>
+          <form id="edit-rule-form">
+            <input type="hidden" id="edit-rule-id">
+
+            <label for="edit-rule-name">Name:</label>
+            <input type="text" id="edit-rule-name" required>
+
+            <label for="edit-rule-condition">Condition:</label>
+            <input type="text" id="edit-rule-condition" required>
+
+            <label for="edit-rule-severity">Severity:</label>
+            <select id="edit-rule-severity" required>
+              <option value="High">High</option>
+              <option value="Medium">Medium</option>
+              <option value="Low">Low</option>
+            </select>
+
+            <label for="edit-rule-status">Status:</label>
+            <select id="edit-rule-status" required>
+              <option value="Active">Active</option>
+              <option value="Inactive">Inactive</option>
+            </select>
+
+            <button type="button" id="save-edited-rule" onclick="editRule()">Save Changes</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Notification Preferences -->
+      <section id="notifications-settings" class="section">
+        <h3>Notification Preferences</h3>
+        <form id="notifications-form">
+          <label for="email-notifications">Enable Email Notifications:</label>
+          <input type="checkbox" id="email-notifications" checked>
+
+          <label for="sms-notifications">Enable SMS Notifications:</label>
+          <input type="checkbox" id="sms-notifications">
+
+          <button type="submit">Save Changes</button>
+        </form>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <p>&copy; 2025 Web Security Monitoring System. All rights reserved.</p>
+    </footer>
+  </div>
+<!-- CSS for Modal -->
+<style>
+   .sidebar { width: 170px; background: #2c3e50; color: white; padding: 10px; position: fixed; height: 100%; display: flex; flex-direction: column; }
+    .sidebar h2 { text-align: center; margin-bottom: 13px; font-size: 19px; }
+    .sidebar a { color: #ecf0f1; text-decoration: none; padding: 6px; display: block; margin-bottom: 6px; border-radius: 5px; transition: 0.3s; font-size: 17px; }
+    .sidebar a:hover { background-color: #2d83da; }
+    .section { background: white;margin-top: 10px; padding: 10px; border-radius: 6px; box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); font-size: 19px; }
+    .main-content { margin-left: 180px; padding: 10px; flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 9px; padding-top: 0px;
+      padding-left: 0px;}
+  
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
+  .modal-content {
+    background-color: white;
+    width: 40%;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+    body { display: flex; height: 100vh; background-color: #f4f7fc; font-size: 12px; }
+   
+  .close-btn {
+    float: right;
+    font-size: 24px;
+    cursor: pointer;
+  }
+
+  .close-btn:hover {
+    color: red;
+  }
+    /* General Styles */
+    
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 20px;
+    }
+
+
+    header nav a {
+      color: white;
+      margin: 0 10px;
+      text-decoration: none;
+    }
+
+    header nav a.active {
+      font-weight: bold;
+      text-decoration: underline;
+    }
+
+     h3 {
+      color: #007bff;
+    }
+    footer p {
+    text-align: center;
+    margin-top: 20px;
+    padding: 10px 0;
+    background: #0078d7;
+    color: #fff;
+    font-size: 19px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    table th, table td {
+      padding: 12px;
+      text-align: left;
+      border: 1px solid #ddd;
+    }
+
+    table th {
+      background-color: #007bff;
+      color: white;
+    }
+
+    form {
+      margin-top: 20px;
+      padding: 20px;
+      background-color: white;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    form label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+
+    form input, form select, form button {
+      display: block;
+      width: 100%;
+      margin-bottom: 15px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+
+    form button {
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+    }
+
+    form button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+  <!-- <link rel="stylesheet" href="../frontend/styles.css"> -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+</body>
+</html>

@@ -13,11 +13,11 @@ try {
     $criticalAlerts = $stmt->fetch(PDO::FETCH_ASSOC)['criticalAlerts'];
 
     // Fetch active rules
-    $stmt = $conn->query("SELECT COUNT(*) AS activeRules FROM detection_rules WHERE active = 1");
-    $activeRules = $stmt->fetch(PDO::FETCH_ASSOC)['activeRules'];
+    $stmt = $conn->query(query: "SELECT COUNT(*) AS activeRules FROM detection_rules WHERE active = 1");
+    $activeRules = $stmt->fetch(mode: PDO::FETCH_ASSOC)['activeRules'];
 
     // Return statistics as JSON
-    echo json_encode([
+    echo json_encode(value: [
         'totalAlerts' => $totalAlerts,
         'criticalAlerts' => $criticalAlerts,
         'activeRules' => $activeRules
